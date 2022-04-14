@@ -1,26 +1,20 @@
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 
+#The server is where everything is processed, this is where the R code goes!
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-
-    output$distPlot <- renderPlot({
-
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
-
+    output$distPlot <- renderPlot({ #Creating an object that is the output labeled distPlot
+        
+        data %>%
+            ggplot(aes(x=get(input$characteristic))) + 
+            geom_histogram() +
+            labs(x= input$characteristic)
     })
-
+    output$table <- renderTable({
+        data %>%
+            filter(Body >= input$Body,
+                   Nutty >= input$Nutty,
+                   Medicinal <= input$Medicinal,
+                   Price <= input$Price)
+    })
 })
