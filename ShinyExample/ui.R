@@ -1,8 +1,8 @@
 library(shiny)
 library(tidyverse)
-data <- read_csv("https://raw.githubusercontent.com/rslasater82/ShinyClass/master/Whisky.csv")
 
-controls <- colnames(select_if(data, is.numeric)) #Reduce to just numeric columns, done before we go into the UI
+whisky <- read_csv("Whisky.csv")
+controls <- colnames(select_if(whisky, is.numeric)) #Reduce to just numeric columns, done before we go into the UI
 
 # Define UI for application, UI is is the controls that the user has to interact with the data
 shinyUI(fluidPage(
@@ -24,30 +24,30 @@ shinyUI(fluidPage(
             sliderInput( #We will make four of these, do we want them to effect the whole dataset?
                 inputId = "Body",
                 label = "Minimum Body Rating",
-                min = min(data$Body),
-                max = max(data$Body),
+                min = min(whisky$Body),
+                max = max(whisky$Body),
                 value = 0
             ),
             sliderInput( #We will make four of these, do we want them to effect the whole dataset?
                 inputId = "Nutty",
                 label = "Minimum Nutty Rating",
-                min = min(data$Body),
-                max = max(data$Body),
+                min = min(whisky$Body),
+                max = max(whisky$Body),
                 value = 0
             ),
             sliderInput( #We will make four of these, do we want them to effect the whole dataset?
                 inputId = "Medicinal",
                 label = "Maximum Medicinal Rating",
-                min = min(data$Medicinal),
-                max = max(data$Medicinal),
+                min = min(whisky$Medicinal),
+                max = max(whisky$Medicinal),
                 value = 0
             ),
             sliderInput( #We will make four of these, do we want them to effect the whole dataset?
                 inputId = "Price",
                 label = "Maximum Price Rating",
-                min = min(data$Price, na.rm = T),
-                max = max(data$Price, na.rm = T),
-                value = max(data$Price, na.rm = T)
+                min = min(whisky$Price, na.rm = T),
+                max = max(whisky$Price, na.rm = T),
+                value = max(whisky$Price, na.rm = T)
             )
         ),
 
